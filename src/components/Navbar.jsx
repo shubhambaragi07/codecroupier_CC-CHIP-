@@ -39,11 +39,11 @@ export default function Navbar() {
                                 <i className="fas fa-wallet me-2"></i>Stack
                             </NavLink>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <NavLink to="/claim-roi" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
                                 <i className="fas fa-chart-line me-2"></i>Claim ROI
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                             <NavLink to="/withdraw" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
                                 <i className="fas fa-money-bill-wave me-2"></i>Withdraw
@@ -59,11 +59,11 @@ export default function Navbar() {
                                 <i className="fas fa-gift me-2"></i>Rewards
                             </NavLink>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <NavLink to="/levels" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
                                 <i className="fas fa-layer-group me-2"></i>Level Income
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                             <NavLink to="/transactions" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
                                 <i className="fas fa-exchange-alt me-2"></i>All Transactions
