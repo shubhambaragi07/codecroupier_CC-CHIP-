@@ -8,15 +8,6 @@ import { ERC20ABI } from "../abi/ERC20ABI";
 import TokenPrice from "../components/TokenPrice";
 import ROIWidget from "../components/ROIWidget";
 
-const REWARD_MILESTONES = [
-    { id: 1, label: "Starter",   business: 2500,   reward: 100,    icon: "🥉" },
-    { id: 2, label: "Bronze",    business: 7500,   reward: 250,    icon: "🥈" },
-    { id: 3, label: "Silver",    business: 17500,  reward: 750,    icon: "🥇" },
-    { id: 4, label: "Gold",      business: 42500,  reward: 3000,   icon: "💎" },
-    { id: 5, label: "Platinum",  business: 142500, reward: 15000,  icon: "👑" },
-    { id: 6, label: "Diamond",   business: 642500, reward: 100000, icon: "🚀" },
-];
-
 const HOW_IT_WORKS = [
     { icon: "🔗", title: "Connect Wallet",   desc: "Link your BSC wallet to get started instantly." },
     { icon: "💰", title: "Deposit CC-CHIP",   desc: "Deposit multiples of 100 CC-CHIP to activate your account." },
@@ -68,7 +59,7 @@ export default function Dashboard() {
     const [roiHistory, setROIHistory] = useState([]);
     const [copied, setCopied] = useState(false);
 
-    const referralLink = `${window.location.origin}/deposit?ref=${address}`;
+    const referralLink = `${window.location.origin}/stack?ref=${address}`;
 
     useEffect(() => {
         if (!connected || !contract || !address) return;
@@ -143,14 +134,6 @@ export default function Dashboard() {
     if (!dashboard)
         return <Loader fullScreen={false} text="Loading dashboard..." />;
 
-    const nextMilestone = REWARD_MILESTONES.find(m => dashboard.teamBusiness < m.business);
-    const prevMilestone = nextMilestone
-        ? REWARD_MILESTONES[REWARD_MILESTONES.indexOf(nextMilestone) - 1]
-        : REWARD_MILESTONES[REWARD_MILESTONES.length - 1];
-    const progressPct = nextMilestone
-        ? Math.min(100, ((dashboard.teamBusiness - (prevMilestone?.business || 0)) / (nextMilestone.business - (prevMilestone?.business || 0))) * 100)
-        : 100;
-
     return (
         <div className="db-page">
             <Toast toasts={toasts} />
@@ -217,42 +200,6 @@ export default function Dashboard() {
             <div className="db-widgets-row">
                 <TokenPrice />
                 <ROIWidget contract={contract} userAddress={address} />
-            </div>
-
-            {/* ── Reward Progress ── */}
-            <div className="db-section-label">🏅 Reward Progress</div>
-            <div className="db-reward-progress-card">
-                <div className="db-reward-progress-top">
-                    <div>
-                        <div className="db-reward-progress-title">
-                            {nextMilestone ? `Next: ${nextMilestone.label} Reward` : "🎉 All Rewards Unlocked!"}
-                        </div>
-                        <div className="db-reward-progress-sub">
-                            Team Business: <strong>{dashboard.teamBusiness.toFixed(0)} CC-CHIP</strong>
-                            {nextMilestone && <> &nbsp;/&nbsp; Target: <strong>{nextMilestone.business.toLocaleString()} CC-CHIP</strong></>}
-                        </div>
-                    </div>
-                    {nextMilestone && (
-                        <div className="db-reward-progress-reward">
-                            {nextMilestone.icon} <span>+{nextMilestone.reward.toLocaleString()} CC-CHIP</span>
-                        </div>
-                    )}
-                </div>
-                <div className="db-progress-bar-wrap">
-                    <div className="db-progress-bar" style={{ width: `${progressPct}%` }} />
-                </div>
-                <div className="db-reward-milestones">
-                    {REWARD_MILESTONES.map(m => {
-                        const done = dashboard.teamBusiness >= m.business;
-                        return (
-                            <div key={m.id} className={`db-milestone ${done ? "db-milestone-done" : ""}`}>
-                                <span className="db-milestone-icon">{m.icon}</span>
-                                <span className="db-milestone-label">{m.label}</span>
-                                <span className="db-milestone-val">{m.business >= 1000 ? `${m.business / 1000}K` : m.business}</span>
-                            </div>
-                        );
-                    })}
-                </div>
             </div>
 
             {/* ── Referral Link ── */}

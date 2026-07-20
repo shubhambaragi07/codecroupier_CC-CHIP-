@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Deposit from "./pages/Deposit";
 import ClaimROI from "./pages/ClaimROI";
 import Rewards from "./pages/Rewards";
-import Withdraw from "./pages/Withdraw";
+import Withdrawal from "./pages/Withdraw";
 import Team from "./pages/Team";
 import Transactions from "./pages/Transactions";
 import Levels from "./pages/Levels";
@@ -46,10 +46,10 @@ function App() {
             >
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/deposit" element={<Deposit />} />
+                    <Route path="/stack" element={<Deposit />} />
                     <Route path="/claim-roi" element={<ClaimROI />} />
                     <Route path="/rewards" element={<Rewards />} />
-                    <Route path="/withdraw" element={<Withdraw />} />
+                    <Route path="/Withdrawal" element={<Withdrawal />} />
                     <Route path="/team" element={<Team />} />
                     <Route path="/transactions" element={<Transactions />} />
                     <Route path="/levels" element={<Levels />} />

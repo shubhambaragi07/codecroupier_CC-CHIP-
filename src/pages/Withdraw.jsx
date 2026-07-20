@@ -4,7 +4,7 @@ import { ethers, parseEther } from "ethers";
 import Loader from "../components/Loader";
 import Toast, { useToast } from "../components/Toast";
 
-export default function Withdraw() {
+export default function Withdrawal() {
     const { contract, connected, address, refreshBalances } = useWallet();
     const [activeTab, setActiveTab] = useState("income");
     const [incomeAmount, setIncomeAmount] = useState("");
@@ -13,9 +13,9 @@ export default function Withdraw() {
     const { toasts, toast } = useToast();
     const [summary, setSummary] = useState({
         maturity: "0",
-        withdrawable: "0",
+        Withdrawalable: "0",
         reward: "0",
-        rewardWithdrawable: "0"
+        rewardWithdrawalable: "0"
     });
 
     useEffect(() => {
@@ -26,22 +26,22 @@ export default function Withdraw() {
         const data = await contract.getIncomeSummary(address);
         setSummary({
             maturity:           Number(ethers.formatEther(data.maturity)).toFixed(4),
-            withdrawable:       Number(ethers.formatEther(data.withdrawable)).toFixed(4),
+            Withdrawalable:       Number(ethers.formatEther(data.Withdrawalable)).toFixed(4),
             reward:             Number(ethers.formatEther(data.reward)).toFixed(4),
-            rewardWithdrawable: Number(ethers.formatEther(data.rewardWithdrawable)).toFixed(4),
+            rewardWithdrawalable: Number(ethers.formatEther(data.rewardWithdrawalable)).toFixed(4),
         });
     }
 
-    async function withdrawIncome() {
+    async function WithdrawalIncome() {
         try {
             if (!connected) return toast.warn("Please connect your wallet first.");
             if (!incomeAmount) return toast.warn("Please enter an amount.");
             setLoading(true);
-            const tx = await contract.withdrawSelf(parseEther(incomeAmount));
+            const tx = await contract.WithdrawalSelf(parseEther(incomeAmount));
             await tx.wait();
             await refreshBalances();
             await loadSummary();
-            toast.success("Income Withdrawal Successful! 💸");
+            toast.success("Income Withdrawalalal Successful! 💸");
             setIncomeAmount("");
         } catch (err) {
             console.log(err);
@@ -50,16 +50,16 @@ export default function Withdraw() {
         setLoading(false);
     }
 
-    async function withdrawReward() {
+    async function WithdrawalReward() {
         try {
             if (!connected) return toast.warn("Please connect your wallet first.");
             if (!rewardAmount) return toast.warn("Please enter an amount.");
             setLoading(true);
-            const tx = await contract.withdrawRewardSelf(parseEther(rewardAmount));
+            const tx = await contract.WithdrawalRewardSelf(parseEther(rewardAmount));
             await tx.wait();
             await refreshBalances();
             await loadSummary();
-            toast.success("Reward Withdrawal Successful! 🎁");
+            toast.success("Reward Withdrawalal Successful! 🎁");
             setRewardAmount("");
         } catch (err) {
             console.log(err);
@@ -76,7 +76,7 @@ export default function Withdraw() {
                     <div className="tx-popup">
                         <div className="tx-popup-icon">🔌</div>
                         <h3 className="tx-popup-title">Wallet Not Connected</h3>
-                        <p className="tx-popup-msg">Please connect your wallet to withdraw funds.</p>
+                        <p className="tx-popup-msg">Please connect your wallet to Withdrawal funds.</p>
                         <div className="tx-popup-pulse" />
                     </div>
                 </div>
@@ -86,14 +86,14 @@ export default function Withdraw() {
     return (
         <div className="container-fluid">
             <Toast toasts={toasts} />
-            <h2 className="mb-4">Withdraw</h2>
+            <h2 className="mb-4">Withdrawal</h2>
 
             <div className="row mb-4">
                 <div className="col-md-6">
                     <div className="card border-success shadow">
                         <div className="card-body text-center">
                             <h5>Available Income Balance</h5>
-                            <h3 className="text-success">{summary.withdrawable} CC-CHIP</h3>
+                            <h3 className="text-success">{summary.Withdrawalable} CC-CHIP</h3>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ export default function Withdraw() {
                     <div className="card border-warning shadow">
                         <div className="card-body text-center">
                             <h5>Available Reward Balance</h5>
-                            <h3 className="text-warning">{summary.rewardWithdrawable} CC-CHIP</h3>
+                            <h3 className="text-warning">{summary.rewardWithdrawalable} CC-CHIP</h3>
                         </div>
                     </div>
                 </div>
@@ -110,26 +110,26 @@ export default function Withdraw() {
             <ul className="nav nav-tabs mb-4">
                 <li className="nav-item">
                     <button className={`nav-link ${activeTab === "income" ? "active" : ""}`} onClick={() => setActiveTab("income")}>
-                        Income Withdraw
+                        Income Withdrawal
                     </button>
                 </li>
                 <li className="nav-item">
                     <button className={`nav-link ${activeTab === "reward" ? "active" : ""}`} onClick={() => setActiveTab("reward")}>
-                        Reward Withdraw
+                        Reward Withdrawal
                     </button>
                 </li>
             </ul>
 
             {activeTab === "income" && (
                 <div className="card shadow">
-                    <div className="card-header bg-primary text-white">Income Withdraw</div>
+                    <div className="card-header bg-primary text-white">Income Withdrawal</div>
                     <div className="card-body">
                         <label>Amount</label>
                         <input className="form-control mb-3" type="number" value={incomeAmount} onChange={(e) => setIncomeAmount(e.target.value)} />
                         {loading && <Loader fullScreen={false} text="Processing transaction..." />}
                         {!loading && (
-                            <button className="btn btn-success w-100" disabled={loading} onClick={withdrawIncome}>
-                                Withdraw Income
+                            <button className="btn btn-success w-100" disabled={loading} onClick={WithdrawalIncome}>
+                                Withdrawal Income
                             </button>
                         )}
                     </div>
@@ -138,14 +138,14 @@ export default function Withdraw() {
 
             {activeTab === "reward" && (
                 <div className="card shadow">
-                    <div className="card-header bg-warning text-dark">Reward Withdraw</div>
+                    <div className="card-header bg-warning text-dark">Reward Withdrawal</div>
                     <div className="card-body">
                         <label>Amount</label>
                         <input className="form-control mb-3" type="number" value={rewardAmount} onChange={(e) => setRewardAmount(e.target.value)} />
                         {loading && <Loader fullScreen={false} text="Processing transaction..." />}
                         {!loading && (
-                            <button className="btn btn-danger w-100" disabled={loading} onClick={withdrawReward}>
-                                Withdraw Reward
+                            <button className="btn btn-danger w-100" disabled={loading} onClick={WithdrawalReward}>
+                                Withdrawal Reward
                             </button>
                         )}
                     </div>

@@ -35,8 +35,8 @@ export default function Navbar() {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/deposit" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
-                                <i className="fas fa-wallet me-2"></i>Deposit
+                            <NavLink to="/stack" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                                <i className="fas fa-wallet me-2"></i>Stack
                             </NavLink>
                         </li>
                         <li className="nav-item">
@@ -52,6 +52,11 @@ export default function Navbar() {
                         <li className="nav-item">
                             <NavLink to="/team" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
                                 <i className="fas fa-users me-2"></i>Team
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/rewards" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                                <i className="fas fa-gift me-2"></i>Rewards
                             </NavLink>
                         </li>
                         <li className="nav-item">
