@@ -1,0 +1,115 @@
+/* CodeCroupier / C-Chip — theme tokens (matches live app: near-black + crimson red + violet purple + cyan) */
+
+/* Brand fonts — previously referenced via var(--cc-font-*) but never loaded,
+   so everything was silently rendering in the browser's default sans-serif. */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+:root {
+  /* Crimson & neon accents — now true colors, not aliased to gold/teal */
+  --cc-red: #D72638;
+  --cc-red-deep: #8C1620;
+  --cc-red-neon: #FF2E55;
+
+  --cc-purple: #9A00FF;
+
+  --cc-cyan: #00E8FF;
+
+  /* Teal — decorative only (hero border shimmer), not used for red/purple UI accents */
+  --cc-teal: #00C9B1;
+  --cc-teal-deep: #007A6E;
+
+  /* Gold — decorative only (hero border shimmer), not used elsewhere in the UI */
+  --cc-gold: #F5A623;
+  --cc-gold-deep: #C8841A;
+  --cc-gold-light: #FFD166;
+  --cc-gold-neon: #FFB830;
+
+  /* Backgrounds — near-black instead of teal-dark */
+  --cc-bg-primary: #08070A;
+  --cc-bg-coal: #0C0A0D;
+  --cc-bg-panel: #120D10;
+  --cc-bg-sidebar: #0A080B;
+
+  /* Card surfaces */
+  --cc-card-bg: rgba(255, 255, 255, 0.03);
+  --cc-card-border: #2B1A20;
+
+  /* Metallics — neutral grey instead of teal-tinted */
+  --cc-silver: #A8ACB2;
+  --cc-silver-light: #E7E9EC;
+  --cc-silver-border: #55565E;
+  --cc-graphite: #26232A;
+
+  /* Win / success states */
+  --cc-green: #00C57E;
+  --cc-jackpot: #00FFB3;
+
+  /* Typography */
+  --cc-font-heading: "Montserrat", sans-serif;
+  --cc-font-body: "Inter", sans-serif;
+  --cc-font-mono: "JetBrains Mono", "Roboto Mono", monospace;
+
+  /* Radii */
+  --cc-radius-card: 14px;
+  --cc-radius-control: 10px;
+
+  /* Sidebar */
+  --cc-sidebar-w: 240px;
+  --cc-sidebar-collapsed: 64px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--cc-bg-primary);
+  color: var(--cc-silver-light);
+  font-family: var(--cc-font-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background:
+    radial-gradient(800px 500px at 0% 0%, rgba(215, 38, 56, 0.07), transparent 55%),
+    radial-gradient(600px 400px at 100% 80%, rgba(0, 232, 255, 0.05), transparent 55%),
+    var(--cc-bg-primary);
+  background-attachment: fixed, fixed, fixed;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.cc-root {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  color: var(--cc-silver-light);
+  font-family: var(--cc-font-body);
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+::selection { background: rgba(215, 38, 56, 0.35); color: #fff; }
+
+* { scrollbar-color: var(--cc-silver-border) var(--cc-bg-coal); scrollbar-width: thin; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: var(--cc-bg-coal); }
+*::-webkit-scrollbar-thumb { background: var(--cc-graphite); border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--cc-silver-border); }

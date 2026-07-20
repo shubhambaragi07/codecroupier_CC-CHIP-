@@ -1,0 +1,259 @@
+/* ---------------- Hero banner ---------------- */
+.cc-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(12px, 2vw, 22px) clamp(20px, 4vw, 40px);
+  border-radius: var(--cc-radius-card);
+  background: linear-gradient(
+    135deg,
+    rgba(215, 38, 56, 0.10),
+    rgba(5, 5, 5, 0.97) 55%,
+    rgba(0, 232, 255, 0.06)
+  );
+  border: 1px solid rgba(215, 38, 56, 0.35);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* rotating conic-gradient border */
+.cc-hero::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--cc-hero-angle, 0deg),
+    var(--cc-gold-neon),
+    var(--cc-teal),
+    var(--cc-cyan),
+    var(--cc-gold-deep),
+    var(--cc-gold-neon)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 10px;
+  animation: cc-hero-border-spin 4s linear infinite;
+  pointer-events: none;
+}
+
+@property --cc-hero-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes cc-hero-border-spin {
+  to { --cc-hero-angle: 360deg; }
+}
+
+.cc-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  min-width: 0;
+}
+
+.cc-hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--cc-cyan);
+  margin-bottom: 10px;
+}
+
+.cc-hero-headline {
+  font-family: var(--cc-font-heading);
+  font-weight: 800;
+  font-size: clamp(26px, 4.5vw, 40px);
+  line-height: 1.08;
+  color: #fff;
+  margin: 0 0 12px;
+  text-shadow: 0 0 20px rgba(255, 46, 85, 0.18);
+}
+
+.cc-hero-sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cc-silver);
+  margin: 0 0 22px;
+  max-width: 440px;
+}
+
+.cc-hero-cta {
+  padding: 13px 22px;
+  font-size: 14px;
+}
+
+.cc-hero-chip-wrap {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.cc-hero-chip {
+  width: clamp(120px, 14vw, 168px);
+  height: clamp(120px, 14vw, 168px);
+  filter: drop-shadow(0 0 22px rgba(154, 0, 255, 0.25));
+}
+
+.cc-hero-img {
+  width: clamp(160px, 20vw, 250px);
+  height: clamp(160px, 20vw, 250px);
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 2;
+  border: 3px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 32px rgba(212, 175, 55, 0.5), 0 0 64px rgba(212, 175, 55, 0.2);
+  will-change: auto;
+}
+
+.cc-hero-img-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(190px, 24vw, 300px);
+  height: clamp(190px, 24vw, 300px);
+  contain: layout style;
+}
+
+/* Pulsing glow behind image */
+.cc-hero-img-ring::before {
+  content: "";
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%);
+  animation: cc-pulse 2.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes cc-pulse {
+  0%, 100% { transform: scale(1);   opacity: 0.7; }
+  50%       { transform: scale(1.1); opacity: 1;   }
+}
+
+/* Dashed rotating ring */
+.cc-ring {
+  position: absolute;
+  border-radius: 50%;
+  animation: cc-ring-spin linear infinite;
+}
+
+.cc-ring-1 {
+  width: 104%;
+  height: 104%;
+  border: 2px dashed rgba(212, 175, 55, 0.8);
+  animation-duration: 6s;
+}
+
+.cc-ring-2 {
+  width: 112%;
+  height: 112%;
+  border: 1.5px solid transparent;
+  border-top: 2px solid var(--cc-cyan, #00e8ff);
+  border-bottom: 2px solid var(--cc-cyan, #00e8ff);
+  animation-duration: 4s;
+  animation-direction: reverse;
+  filter: drop-shadow(0 0 6px var(--cc-cyan, #00e8ff));
+}
+
+.cc-ring-3 {
+  width: 120%;
+  height: 120%;
+  border: 1px dotted rgba(154, 0, 255, 0.7);
+  animation-duration: 9s;
+  filter: drop-shadow(0 0 5px rgba(154,0,255,0.6));
+}
+
+@keyframes cc-ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Orbiting dot on ring-2 */
+.cc-ring-2::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cc-cyan, #00e8ff);
+  box-shadow: 0 0 10px var(--cc-cyan, #00e8ff);
+  transform: translateX(-50%);
+}
+
+.cc-hero-headline {
+  font-family: var(--cc-font-heading);
+  font-weight: 800;
+  font-size: clamp(32px, 5.5vw, 52px);
+  line-height: 1.08;
+  color: #fff;
+  margin: 0 0 12px;
+  text-shadow: 0 0 20px rgba(255, 46, 85, 0.18);
+}
+
+.cc-chip-sheen {
+  transform-origin: 110px 110px;
+  animation: cc-chip-spin 8s linear infinite;
+}
+
+@keyframes cc-chip-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cc-hero-seal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px dashed var(--cc-silver-border);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--cc-silver);
+  transform: rotate(-3deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-hero::before,
+  .cc-chip-sheen {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .cc-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 28px;
+  }
+  .cc-hero-content {
+    max-width: 100%;
+  }
+  .cc-hero-sub {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
