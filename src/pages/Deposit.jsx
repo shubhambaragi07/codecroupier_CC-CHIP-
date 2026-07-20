@@ -34,11 +34,11 @@ export default function Deposit() {
         }
     }
 
-    const submitDeposit = async () => {
+    const submitStack = async () => {
         try {
             if (!connected) return toast.warn("Please connect your wallet first.");
-            if (!amount) return toast.warn("Please enter a deposit amount.");
-            if (Number(amount) % 100 !== 0) return toast.warn("Deposit amount must be a multiple of 100.");
+            if (!amount) return toast.warn("Please enter a Stack amount.");
+            if (Number(amount) % 100 !== 0) return toast.warn("Stack amount must be a multiple of 100.");
 
             setLoading(true);
             const depositAmount = parseEther(amount);
@@ -62,7 +62,7 @@ export default function Deposit() {
             await depositTx.wait();
             await refreshBalances();
 
-            toast.success("Deposit Successful! 🎉");
+            toast.success("Stack Successful! 🎉");
             setAmount("");
 
             const updatedUser = await contract.users(address);
@@ -97,11 +97,11 @@ export default function Deposit() {
                 <div className="col-lg-6">
                     <div className="card shadow">
                         <div className="card-header bg-primary text-white">
-                            <h4 className="mb-0">Deposit CC-CHIP</h4>
+                            <h4 className="mb-0">Stack CC-CHIP</h4>
                         </div>
                         <div className="card-body">
                             <div className="mb-3">
-                                <label>Deposit Amount</label>
+                                <label>Stack Amount</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -125,7 +125,7 @@ export default function Deposit() {
                             <div className="d-grid gap-2">
                                 <button
                                     className="btn btn-success w-100"
-                                    onClick={submitDeposit}
+                                    onClick={submitStack}
                                     disabled={loading}
                                 >
                                     {loading ? (
@@ -133,7 +133,7 @@ export default function Deposit() {
                                             <span style={{ width: 16, height: 16, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", display: "inline-block", animation: "cc-spin 0.7s linear infinite" }} />
                                             Processing...
                                         </span>
-                                    ) : "Submit Deposit"}
+                                    ) : "Submit Stack"}
                                 </button>
                             </div>
                         </div>

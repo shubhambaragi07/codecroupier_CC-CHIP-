@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "../context/WalletContext";
-import { getRewardAchieved, getRewardHistory } from "../services/graphService";
+import { getRewardAchieved, getRewardHistory, getDashboard } from "../services/graphService";
 import Toast, { useToast } from "../components/Toast";
 
 const REWARDS = [
@@ -12,11 +12,21 @@ const REWARDS = [
     { id: 6, business: 642500, reward: 100000 },
 ];
 
+const REWARD_MILESTONES = [
+    { id: 1, label: "Starter",   business: 2500,   reward: 100,    icon: "🥉" },
+    { id: 2, label: "Bronze",    business: 7500,   reward: 250,    icon: "🥈" },
+    { id: 3, label: "Silver",    business: 17500,  reward: 750,    icon: "🥇" },
+    { id: 4, label: "Gold",      business: 42500,  reward: 3000,   icon: "💎" },
+    { id: 5, label: "Platinum",  business: 142500, reward: 15000,  icon: "👑" },
+    { id: 6, label: "Diamond",   business: 642500, reward: 100000, icon: "🚀" },
+];
+
 export default function Reward() {
     const { contract, address, connected, refreshBalances } = useWallet();
     const [loading, setLoading] = useState(false);
     const [achievedRewards, setAchievedRewards] = useState([]);
     const [claimedRewards, setClaimedRewards] = useState([]);
+    const [teamBusiness, setTeamBusiness] = useState(0);
     const { toasts, toast } = useToast();
 
     useEffect(() => {
@@ -25,12 +35,14 @@ export default function Reward() {
 
     async function loadRewards() {
         try {
-            const [achieved, claimed] = await Promise.all([
+            const [achieved, claimed, dashboard] = await Promise.all([
                 getRewardAchieved(address),
                 getRewardHistory(address),
+                getDashboard(address),
             ]);
             setAchievedRewards(achieved);
             setClaimedRewards(claimed);
+            setTeamBusiness(dashboard ? Number(dashboard.teamBusiness || 0) / 1e18 : 0);
         } catch (err) {
             console.log(err);
         }
@@ -66,11 +78,62 @@ export default function Reward() {
             </>
         );
 
-    return (
-        <div className="container-fluid">
-            <Toast toasts={toasts} />
-            <h2 className="mb-4">Rewards</h2>
+    const nextMilestone = REWARD_MILESTONES.find(m => teamBusiness < m.business);
+    const prevMilestone = nextMilestone
+        ? REWARD_MILESTONES[REWARD_MILESTONES.indexOf(nextMilestone) - 1]
+        : REWARD_MILESTONES[REWARD_MILESTONES.length - 1];
+    const progressPct = nextMilestone
+        ? Math.min(100, ((teamBusiness - (prevMilestone?.business || 0)) / (nextMilestone.business - (prevMilestone?.business || 0))) * 100)
+        : 100;
 
+    return (
+        <div className="db-page">
+            <Toast toasts={toasts} />
+
+            {/* ── Page Title ── */}
+            <div className="cc-section-title">
+                <h1>Rewards</h1>
+                <p>Track and claim your reward milestones</p>
+            </div>
+
+            {/* ── Reward Progress ── */}
+            <div className="db-section-label">🏅 Reward Progress</div>
+            <div className="db-reward-progress-card">
+                <div className="db-reward-progress-top">
+                    <div>
+                        <div className="db-reward-progress-title">
+                            {nextMilestone ? `Next: ${nextMilestone.label} Reward` : "🎉 All Rewards Unlocked!"}
+                        </div>
+                        <div className="db-reward-progress-sub">
+                            Team Business: <strong>{teamBusiness.toFixed(0)} CC-CHIP</strong>
+                            {nextMilestone && <> &nbsp;/&nbsp; Target: <strong>{nextMilestone.business.toLocaleString()} CC-CHIP</strong></>}
+                        </div>
+                    </div>
+                    {nextMilestone && (
+                        <div className="db-reward-progress-reward">
+                            {nextMilestone.icon} <span>+{nextMilestone.reward.toLocaleString()} CC-CHIP</span>
+                        </div>
+                    )}
+                </div>
+                <div className="db-progress-bar-wrap">
+                    <div className="db-progress-bar" style={{ width: `${progressPct}%` }} />
+                </div>
+                <div className="db-reward-milestones">
+                    {REWARD_MILESTONES.map(m => {
+                        const done = teamBusiness >= m.business;
+                        return (
+                            <div key={m.id} className={`db-milestone ${done ? "db-milestone-done" : ""}`}>
+                                <span className="db-milestone-icon">{m.icon}</span>
+                                <span className="db-milestone-label">{m.label}</span>
+                                <span className="db-milestone-val">{m.business >= 1000 ? `${m.business / 1000}K` : m.business}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* ── Reward List ── */}
+            <div className="db-section-label">🎯 Available Rewards</div>
             <div className="card shadow">
                 <div className="card-header bg-danger text-white">Reward List</div>
                 <div className="card-body p-0">

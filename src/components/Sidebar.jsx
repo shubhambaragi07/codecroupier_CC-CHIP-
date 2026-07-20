@@ -3,11 +3,12 @@ import { useState } from "react";
 
 const links = [
     { to: "/",            end: true,  icon: "fa-home",           label: "Dashboard" },
-    { to: "/deposit",     end: false, icon: "fa-wallet",         label: "Deposit" },
-    { to: "/claim-roi",   end: false, icon: "fa-chart-line",     label: "Claim ROI" },
-    { to: "/withdraw",    end: false, icon: "fa-money-bill-wave",label: "Withdraw" },
+    { to: "/stack",       end: false, icon: "fa-wallet",         label: "Stack" },
+    // { to: "/claim-roi",   end: false, icon: "fa-chart-line",     label: "Claim ROI" },
+    { to: "/Withdrawal",    end: false, icon: "fa-money-bill-wave",label: "Withdrawal" },
     { to: "/team",        end: false, icon: "fa-users",          label: "Team" },
-    { to: "/levels",      end: false, icon: "fa-layer-group",    label: "Level Income" },
+    { to: "/rewards",     end: false, icon: "fa-gift",           label: "Rewards" },
+    // { to: "/levels",      end: false, icon: "fa-layer-group",    label: "Level Income" },
     { to: "/transactions",end: false, icon: "fa-exchange-alt",   label: "All Transactions" },
 ];
 
