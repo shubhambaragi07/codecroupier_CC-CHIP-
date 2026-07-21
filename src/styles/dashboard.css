@@ -2104,6 +2104,164 @@ html, body, #root { overflow-x: hidden; max-width: 100vw; }
 }
 
 /* ============================================================
+   WEB3MODAL — full theming to match app crimson UI
+   ============================================================ */
+
+/* ── Button — disconnect / connect ── */
+w3m-button::part(button),
+w3m-connect-button::part(button),
+w3m-account-button::part(button) {
+  background: linear-gradient(135deg, var(--cc-red), var(--cc-red-deep)) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  font-family: var(--cc-font-body) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 rgba(255, 46, 85, 0) !important;
+  transition: box-shadow 0.2s ease, transform 0.15s ease !important;
+  cursor: pointer !important;
+  min-height: 40px !important;
+  text-transform: none !important;
+  letter-spacing: 0.3px !important;
+}
+
+w3m-button::part(button):hover,
+w3m-connect-button::part(button):hover,
+w3m-account-button::part(button):hover {
+  box-shadow: 0 0 20px rgba(255, 46, 85, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+w3m-button::part(button):active,
+w3m-connect-button::part(button):active,
+w3m-account-button::part(button):active {
+  transform: translateY(0) !important;
+  box-shadow: 0 0 10px rgba(255, 46, 85, 0.25) !important;
+}
+
+/* ── Connected state — wallet address display ── */
+w3m-button::part(wallet-button),
+w3m-account-button::part(account-button) {
+  background: rgba(0, 232, 255, 0.08) !important;
+  border: 1px solid rgba(0, 232, 255, 0.25) !important;
+  border-radius: 10px !important;
+  color: var(--cc-cyan) !important;
+  font-family: var(--cc-font-mono) !important;
+  font-size: 12px !important;
+  padding: 7px 12px !important;
+  transition: all 0.15s ease !important;
+}
+
+w3m-button::part(wallet-button):hover,
+w3m-account-button::part(account-button):hover {
+  background: rgba(0, 232, 255, 0.14) !important;
+  border-color: var(--cc-cyan) !important;
+  box-shadow: 0 0 14px rgba(0, 232, 255, 0.2) !important;
+}
+
+/* ── Modal backdrop ── */
+w3m-modal::part(backdrop) {
+  background: rgba(8, 7, 10, 0.8) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* ── Modal container ── */
+w3m-modal::part(container) {
+  background: linear-gradient(155deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02) 70%
+  ) !important;
+  border: 1px solid rgba(215, 38, 56, 0.3) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.55),
+    0 0 40px rgba(255,46,85,0.10) !important;
+}
+
+/* ── Modal header ── */
+w3m-modal::part(header) {
+  color: #fff !important;
+  font-family: var(--cc-font-heading) !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid rgba(43, 26, 32, 0.6) !important;
+}
+
+/* ── Modal close button ── */
+w3m-modal::part(close-button) {
+  color: var(--cc-silver) !important;
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 50% !important;
+}
+w3m-modal::part(close-button):hover {
+  color: #fff !important;
+  background: rgba(255,46,85,0.2) !important;
+}
+
+/* ── Wallet list items ── */
+w3m-wallet-item::part(item) {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  transition: all 0.15s ease !important;
+  color: var(--cc-silver-light) !important;
+}
+w3m-wallet-item::part(item):hover {
+  background: rgba(215, 38, 56, 0.10) !important;
+  border-color: rgba(215, 38, 56, 0.35) !important;
+  box-shadow: 0 0 16px rgba(255, 46, 85, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+w3m-wallet-item::part(name) {
+  color: #fff !important;
+  font-family: var(--cc-font-heading) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+w3m-wallet-item::part(description) {
+  color: var(--cc-silver) !important;
+  font-size: 12px !important;
+}
+
+/* ── Connect button inside wallet list ── */
+w3m-connect-button::part(connect-button) {
+  background: linear-gradient(135deg, var(--cc-red), var(--cc-red-deep)) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-family: var(--cc-font-body) !important;
+  transition: box-shadow 0.2s ease, transform 0.15s ease !important;
+}
+w3m-connect-button::part(connect-button):hover {
+  box-shadow: 0 0 20px rgba(255, 46, 85, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── Tab buttons inside modal ── */
+w3m-tab::part(tab) {
+  color: var(--cc-silver) !important;
+  border-color: transparent transparent var(--cc-card-border) transparent !important;
+  font-family: var(--cc-font-body) !important;
+  font-size: 13px !important;
+}
+w3m-tab::part(tab-active) {
+  color: var(--cc-red-neon) !important;
+  border-color: transparent transparent var(--cc-red-neon) transparent !important;
+}
+
+/* ── W3M text / body ── */
+w3m-text::part(text) {
+  color: var(--cc-silver-light) !important;
+  font-family: var(--cc-font-body) !important;
+}
+w3m-text::part(secondary) {
+  color: var(--cc-silver) !important;
+}
+
+/* ============================================================
    TOAST NOTIFICATIONS
    ============================================================ */
 @keyframes cc-toast-slide-in {

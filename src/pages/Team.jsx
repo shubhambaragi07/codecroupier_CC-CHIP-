@@ -91,168 +91,148 @@ export default function Team() {
     }
 
     return (
-        <div className="container-fluid">
+        <div className="db-page">
             <Toast toasts={toasts} />
-            <h3 className="mb-4">My Team</h3>
 
-            <div className="row mb-4">
-
-                <div className="col-md-3">
-
-                    <div className="card shadow">
-
-                        <div className="card-body">
-
-                            <h6>Total Direct</h6>
-
-                            <h2>{user.directCount}</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div className="col-md-3">
-
-                    <div className="card border-success shadow">
-
-                        <div className="card-body text-center">
-
-                            <h5>Total Downline</h5>
-
-                            <h2>{downlineCount}</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>    
-
-                <div className="col-md-3">
-
-                    <div className="card shadow">
-
-                        <div className="card-body">
-
-                            <h6>Team Business</h6>
-
-                            <h2>{user.teamBusiness} CC-CHIP</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div className="col-md-3">
-
-                    <div className="card shadow">
-
-                        <div className="card-body">
-
-                            <h6>Referrer</h6>
-
-                            <small>
-
-                                {user.referrer}
-
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+            {/* ── Page Title ── */}
+            <div className="cc-section-title">
+                <h1>My Team</h1>
+                <p>View your direct referrals and team performance</p>
             </div>
 
-            <div className="card shadow">
-
-                <div className="card-header bg-primary text-white">
-
-                    Direct Members
-
+            {/* ── Stats Cards ── */}
+            <div className="cc-grid-4">
+                <div className="cc-card cc-glow-red">
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "var(--cc-cyan)", background: "linear-gradient(135deg, rgba(0,232,255,0.15), rgba(154,0,255,0.08))" }}>
+                            👤
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Total Direct</h5>
+                            <div className="cc-withdraw-balance" style={{ color: "var(--cc-cyan)" }}>{user.directCount}</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="card-body p-0">
+                <div className="cc-card cc-glow-purple">
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "var(--cc-jackpot)", background: "linear-gradient(135deg, rgba(0,197,126,0.15), rgba(0,232,255,0.08))" }}>
+                            🌐
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Total Downline</h5>
+                            <div className="cc-withdraw-balance" style={{ color: "var(--cc-jackpot)" }}>{downlineCount}</div>
+                        </div>
+                    </div>
+                </div>
 
-                    <table className="table table-striped mb-0">
+                <div className="cc-card" style={{
+                    background: "linear-gradient(155deg, rgba(245,166,35,0.10), rgba(255,255,255,0.015) 65%)",
+                    borderColor: "rgba(245,166,35,0.3)"
+                }}>
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "var(--cc-gold-light)", background: "linear-gradient(135deg, rgba(245,166,35,0.18), rgba(245,166,35,0.04))" }}>
+                            💼
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Team Business</h5>
+                            <div className="cc-withdraw-balance" style={{ color: "var(--cc-gold-light)" }}>{Number(user.teamBusiness).toFixed(2)} CC-CHIP</div>
+                        </div>
+                    </div>
+                </div>
 
+                <div className="cc-card" style={{
+                    background: "linear-gradient(155deg, rgba(154,0,255,0.10), rgba(255,255,255,0.015) 65%)",
+                    borderColor: "rgba(154,0,255,0.3)"
+                }}>
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "#c084fc", background: "linear-gradient(135deg, rgba(154,0,255,0.18), rgba(154,0,255,0.04))" }}>
+                            🔗
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Referrer</h5>
+                            <div className="cc-withdraw-balance" style={{ 
+                                color: "#c084fc", 
+                                fontFamily: "var(--cc-font-mono)", 
+                                fontSize: "14px",
+                                fontWeight: 600,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                maxWidth: "180px"
+                            }}>
+                                {user.referrer === "0x0000000000000000000000000000000000000000" 
+                                    ? "No Referrer" 
+                                    : `${user.referrer.substring(0, 6)}...${user.referrer.substring(38)}`}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* ── Direct Members Table ── */}
+            <div className="tx-card">
+                <div className="tx-card-header">
+                    <span className="tx-card-header-icon">👥</span>
+                    <span className="tx-card-header-title">Direct Members</span>
+                    <span className="tx-card-header-count">{team.length} member{team.length !== 1 ? "s" : ""}</span>
+                </div>
+                <div className="tx-table-wrap">
+                    <table className="tx-table">
                         <thead>
-
                             <tr>
-
                                 <th>#</th>
-
                                 <th>Wallet</th>
-
                                 <th>Deposit</th>
-
                                 <th>Team Business</th>
-
                                 <th>Directs</th>
-
                             </tr>
-
                         </thead>
-
                         <tbody>
-
-                            {
-
-                                team.length === 0 ?
-
+                            {team.length === 0 ? (
                                 <tr>
-
-                                    <td
-                                        colSpan="5"
-                                        className="text-center">
-
-                                        No Team Found
-
+                                    <td colSpan="5" style={{ padding: 0 }}>
+                                        <div className="tx-empty-state">
+                                            <span className="tx-empty-icon">👥</span>
+                                            <span>No Team Found</span>
+                                            <span style={{ fontSize: "12px", color: "var(--cc-silver-border)" }}>
+                                                Start building your team by sharing your referral link!
+                                            </span>
+                                        </div>
                                     </td>
-
                                 </tr>
-
-                                :
-
-                                team.map((item,index)=>(
-
-                                    <tr key={index}>
-
-                                        <td>{index+1}</td>
-
+                            ) : (
+                                team.map((item, index) => (
+                                    <tr key={index} className="tx-row" style={{ animationDelay: `${index * 50}ms` }}>
+                                        <td className="tx-index">{index + 1}</td>
                                         <td>
-
-                                            {item.wallet.substring(0,8)}
-                                            ...
-                                            {item.wallet.substring(38)}
-
+                                            <span className="tx-addr" title={item.wallet}>
+                                                {item.wallet.substring(0, 8)}...{item.wallet.substring(36)}
+                                            </span>
                                         </td>
-
-                                        <td>{item.deposit} CC-CHIP</td>
-
-                                        <td>{item.teamBusiness} CC-CHIP</td>
-
-                                        <td>{item.directs}</td>
-
+                                        <td>
+                                            <span className="tx-amount tx-amount-green">
+                                                {Number(item.deposit).toFixed(2)} CC-CHIP
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className="tx-amount tx-amount-purple">
+                                                {Number(item.teamBusiness).toFixed(2)} CC-CHIP
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className="tx-level-badge">
+                                                {item.directs}
+                                            </span>
+                                        </td>
                                     </tr>
-
                                 ))
-
-                            }
-
+                            )}
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     );
-
 }
+
