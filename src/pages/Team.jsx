@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useWallet } from "../context/WalletContext";
 import { getTotalDownline, getLevelsSummary, getLevelMembers } from "../services/graphService";
 import Loader from "../components/Loader";
@@ -9,6 +10,12 @@ export default function Team() {
 
     const { contract, address, connected } = useWallet();
     const { toasts, toast } = useToast();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const memberParam = searchParams.get("member");
+
+    // Use ?member= query param to view another user's team, otherwise use connected wallet
+    const targetAddress = memberParam || address;
 
     const [loading, setLoading] = useState(true);
     const [team, setTeam] = useState([]);
@@ -24,11 +31,11 @@ export default function Team() {
 
     useEffect(() => {
 
-        if (connected && contract && address) {
+        if (connected && contract && targetAddress) {
             loadTeam();
         }
 
-    }, [connected, contract, address]);
+    }, [connected, contract, targetAddress]);
 
     async function loadTeam() {
 
@@ -36,7 +43,7 @@ export default function Team() {
 
             setLoading(true);
 
-            const userData = await contract.users(address);
+            const userData = await contract.users(targetAddress);
 
             setUser({
                 referrer: userData.referrer,
@@ -45,11 +52,11 @@ export default function Team() {
             });
 
             let directs = [];
-            const total = await getTotalDownline(address);
+            const total = await getTotalDownline(targetAddress);
 
             for (let i = 0; i < Number(userData.directCount); i++) {
 
-                const member = await contract.getDirect(address, i);
+                const member = await contract.getDirect(targetAddress, i);
 
                 const detail = await contract.users(member);
 
@@ -79,10 +86,10 @@ export default function Team() {
     }
 
     const loadLevelsSummary = useCallback(async () => {
-        if (!address) return;
+        if (!targetAddress) return;
         try {
             setLevelsLoading(true);
-            const summaries = await getLevelsSummary(address);
+            const summaries = await getLevelsSummary(targetAddress);
             setLevelSummaries(summaries);
 
             // Auto-select first level with members, or default to level 1
@@ -100,13 +107,13 @@ export default function Team() {
         } finally {
             setLevelsLoading(false);
         }
-    }, [address]);
+    }, [targetAddress]);
 
     const loadLevelMembers = useCallback(async (level) => {
-        if (!address) return;
+        if (!targetAddress) return;
         try {
             setMemberLoading(true);
-            const members = await getLevelMembers(address, level);
+            const members = await getLevelMembers(targetAddress, level);
             setLevelMembers(members);
         } catch (e) {
             console.log(`Error loading level ${level} members:`, e);
@@ -114,7 +121,7 @@ export default function Team() {
         } finally {
             setMemberLoading(false);
         }
-    }, [address]);
+    }, [targetAddress]);
 
     function handleLevelClick(level) {
         if (level === selectedLevel) return;
@@ -164,9 +171,20 @@ export default function Team() {
             <Toast toasts={toasts} />
 
             {/* ── Page Title ── */}
-            <div className="cc-section-title">
-                <h1>My Team</h1>
-                <p>View your team hierarchy and performance across all levels</p>
+            <div className="cc-section-title" style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                    <h1>{memberParam ? `Team of ${memberParam.substring(0, 6)}...${memberParam.substring(38)}` : "My Team"}</h1>
+                    <p>View your team hierarchy and performance across all levels</p>
+                </div>
+                {memberParam && (
+                    <button
+                        className="cc-btn-secondary"
+                        onClick={() => navigate("/team")}
+                        style={{ flexShrink: 0 }}
+                    >
+                        ← Back to My Team
+                    </button>
+                )}
             </div>
 
             {/* ── Stats Cards ── */}
@@ -373,9 +391,13 @@ export default function Team() {
                                             </span>
                                         </td>
                                         <td>
-                                            <span className="tx-level-badge">
-                                                {item.directs}
-                                            </span>
+                                            <button
+                                                className="cc-btn-view-team"
+                                                onClick={() => navigate(`/team?member=${item.wallet}`)}
+                                                title={`View ${item.wallet.substring(0, 8)}... team`}
+                                            >
+                                                View Team
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

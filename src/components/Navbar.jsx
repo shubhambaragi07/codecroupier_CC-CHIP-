@@ -1,14 +1,28 @@
+import { useRef, useCallback } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { Collapse } from "bootstrap";
 import WalletButton from "./WalletButton";
 import Logo from "./Logo";
 
 export default function Navbar() {
+    const collapseRef = useRef(null);
+
+    const handleNavClick = useCallback(() => {
+        const collapseEl = collapseRef.current;
+        if (collapseEl) {
+            const bsCollapse = Collapse.getInstance(collapseEl);
+            if (bsCollapse) {
+                bsCollapse.hide();
+            }
+        }
+    }, []);
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div className="container-fluid">
 
                 {/* Logo */}
-                <Link className="navbar-brand fw-bold" to="/">
+                <Link className="navbar-brand fw-bold" to="/" onClick={handleNavClick}>
                    <Logo/>
                 </Link>
 
@@ -26,16 +40,17 @@ export default function Navbar() {
                 <div
                     className="collapse navbar-collapse"
                     id="navbarMenu"
+                    ref={collapseRef}
                 >
                     {/* Sidebar links — visible only on mobile (hidden on lg+) */}
                     <ul className="navbar-nav me-auto d-lg-none">
                         <li className="nav-item">
-                            <NavLink to="/" end className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/" end className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-home me-2"></i>Dashboard
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/stake" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/stake" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-wallet me-2"></i>Stake
                             </NavLink>
                         </li>
@@ -45,17 +60,17 @@ export default function Navbar() {
                             </NavLink>
                         </li> */}
                         <li className="nav-item">
-                            <NavLink to="/withdraw" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/withdraw" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-money-bill-wave me-2"></i>Withdraw
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/team" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/team" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-users me-2"></i>Team
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/rewards" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/rewards" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-gift me-2"></i>Rewards
                             </NavLink>
                         </li>
@@ -65,7 +80,7 @@ export default function Navbar() {
                             </NavLink>
                         </li> */}
                         <li className="nav-item">
-                            <NavLink to="/transactions" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                            <NavLink to="/transactions" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`} onClick={handleNavClick}>
                                 <i className="fas fa-exchange-alt me-2"></i>All Transactions
                             </NavLink>
                         </li>
