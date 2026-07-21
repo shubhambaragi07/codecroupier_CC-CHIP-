@@ -42,7 +42,7 @@ export default function TokenPrice() {
                 ) : (
                     <>
                         <div className="db-widget-main-val">
-                            ${price !== null ? price.toFixed(4) : "—"}
+                            $ 1.08
                             <span className="db-widget-main-unit">USD</span>
                         </div>
                         <div className="db-widget-sub">1 CC-CHIP = 1.08 USD</div>
