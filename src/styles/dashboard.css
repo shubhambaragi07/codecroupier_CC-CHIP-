@@ -968,32 +968,148 @@
 .cc-level-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 14px;
+  gap: 12px;
+  padding: 16px;
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .cc-level-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 768px) {
   .cc-level-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 560px) {
+@media (max-width: 500px) {
   .cc-level-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.tx-card-body {
+  padding: 0;
+}
+
+/* ── Level Card ── */
 .cc-level-card {
-  text-align: center;
-  padding: 16px 10px;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 12px 12px;
+  border-radius: var(--cc-radius-card);
+  border: 1px solid var(--cc-card-border);
+  background: linear-gradient(155deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01) 70%);
+  transition: all 0.18s ease;
+  cursor: pointer;
+  user-select: none;
 }
+.cc-level-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(154,0,255,0.35);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Active level (has members) */
 .cc-level-card-active {
-  background: linear-gradient(
-    160deg,
-    rgba(215, 38, 56, 0.16),
-    rgba(255, 255, 255, 0.02) 70%
-  );
-  border-color: var(--cc-red);
-  box-shadow: 0 0 16px rgba(215, 38, 56, 0.25);
+  border-color: rgba(215,38,56,0.3);
+  background: linear-gradient(160deg, rgba(215,38,56,0.08), rgba(255,255,255,0.015) 70%);
 }
+.cc-level-card-active:hover {
+  border-color: rgba(215,38,56,0.5);
+  box-shadow: 0 0 16px rgba(215,38,56,0.2);
+}
+
+/* Selected level */
+.cc-level-card-selected {
+  border-color: var(--cc-red) !important;
+  background: linear-gradient(160deg, rgba(215,38,56,0.18), rgba(154,0,255,0.08) 70%) !important;
+  box-shadow: 0 0 20px rgba(215,38,56,0.3) !important;
+  transform: translateY(-3px);
+}
+
+/* Empty level */
+.cc-level-card-empty {
+  opacity: 0.5;
+}
+.cc-level-card-empty:hover {
+  opacity: 0.75;
+}
+
+/* ── Level Card Header ── */
+.cc-level-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.cc-level-badge {
+  font-family: var(--cc-font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--cc-silver-light);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.cc-level-selected .cc-level-badge {
+  background: linear-gradient(135deg, rgba(255,46,85,0.25), rgba(154,0,255,0.15));
+  border-color: rgba(255,46,85,0.4);
+}
+.cc-level-member-count {
+  font-family: var(--cc-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cc-cyan);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0,232,255,0.1);
+  border: 1px solid rgba(0,232,255,0.2);
+}
+.cc-level-no-members {
+  color: var(--cc-silver-border);
+  background: rgba(255,255,255,0.04);
+  border-color: var(--cc-card-border);
+}
+
+/* ── Level Card Stats ── */
+.cc-level-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+.cc-level-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+.cc-level-stat-label {
+  color: var(--cc-silver-border);
+  font-weight: 500;
+}
+.cc-level-stat-value {
+  font-family: var(--cc-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+.cc-level-stat-cyan { color: var(--cc-cyan); }
+.cc-level-stat-gold { color: var(--cc-gold-light); }
+.cc-level-stat-purple { color: #c084fc; }
+
+/* ── Empty message for level card ── */
+.cc-level-card-empty-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 6px;
+  font-size: 11px;
+  color: var(--cc-silver-border);
+  font-style: italic;
+}
+
 .cc-level-label {
   font-size: 12px;
   color: var(--cc-silver);
