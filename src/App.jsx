@@ -46,7 +46,7 @@ function App() {
             >
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/stack" element={<Deposit />} />
+                    <Route path="/stake" element={<Deposit />} />
                     <Route path="/claim-roi" element={<ClaimROI />} />
                     <Route path="/rewards" element={<Rewards />} />
                     <Route path="/Withdrawal" element={<Withdrawal />} />

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const links = [
     { to: "/",            end: true,  icon: "fa-home",           label: "Dashboard" },
-    { to: "/stack",       end: false, icon: "fa-wallet",         label: "Stack" },
+    { to: "/stake",      end: false, icon: "fa-wallet",         label: "Stake" },
     // { to: "/claim-roi",   end: false, icon: "fa-chart-line",     label: "Claim ROI" },
     { to: "/Withdrawal",    end: false, icon: "fa-money-bill-wave",label: "Withdrawal" },
     { to: "/team",        end: false, icon: "fa-users",          label: "Team" },

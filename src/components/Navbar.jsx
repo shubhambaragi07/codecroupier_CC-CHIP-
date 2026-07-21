@@ -35,8 +35,8 @@ export default function Navbar() {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/stack" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
-                                <i className="fas fa-wallet me-2"></i>Stack
+                            <NavLink to="/stake" className={({ isActive }) => `nav-link rounded cc-nav-item ${isActive ? "cc-nav-item-active text-white" : "text-light"}`}>
+                                <i className="fas fa-wallet me-2"></i>Stake
                             </NavLink>
                         </li>
                         {/* <li className="nav-item">

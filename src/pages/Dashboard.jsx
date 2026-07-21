@@ -10,7 +10,7 @@ import ROIWidget from "../components/ROIWidget";
 
 const HOW_IT_WORKS = [
     { icon: "🔗", title: "Connect Wallet",   desc: "Link your BSC wallet to get started instantly." },
-    { icon: "💰", title: "Deposit CC-CHIP",   desc: "Deposit multiples of 100 CC-CHIP to activate your account." },
+    { icon: "💰", title: "Stake CC-CHIP",   desc: "Stake multiples of 100 CC-CHIP to activate your account." },
     { icon: "📈", title: "Earn Daily Reward", desc: "Earn up to 1% daily reward on your active deposit." },
     { icon: "👥", title: "Refer & Earn",     desc: "Get direct & level income by growing your team." },
 ];
@@ -59,7 +59,7 @@ export default function Dashboard() {
     const [roiHistory, setROIHistory] = useState([]);
     const [copied, setCopied] = useState(false);
 
-    const referralLink = `${window.location.origin}/stack?ref=${address}`;
+    const referralLink = `${window.location.origin}/stake?ref=${address}`;
 
     useEffect(() => {
         if (!connected || !contract || !address) return;

@@ -41,7 +41,7 @@ export default function Withdrawal() {
             await tx.wait();
             await refreshBalances();
             await loadSummary();
-            toast.success("Income Withdrawalalal Successful! 💸");
+            toast.success("Income Withdrawal Successful! 💸");
             setIncomeAmount("");
         } catch (err) {
             console.log(err);
@@ -59,7 +59,7 @@ export default function Withdrawal() {
             await tx.wait();
             await refreshBalances();
             await loadSummary();
-            toast.success("Reward Withdrawalal Successful! 🎁");
+            toast.success("Reward Withdrawal Successful! 🎁");
             setRewardAmount("");
         } catch (err) {
             console.log(err);
@@ -76,7 +76,7 @@ export default function Withdrawal() {
                     <div className="tx-popup">
                         <div className="tx-popup-icon">🔌</div>
                         <h3 className="tx-popup-title">Wallet Not Connected</h3>
-                        <p className="tx-popup-msg">Please connect your wallet to Withdrawal funds.</p>
+                        <p className="tx-popup-msg">Please connect your wallet to withdraw funds.</p>
                         <div className="tx-popup-pulse" />
                     </div>
                 </div>
@@ -84,73 +84,139 @@ export default function Withdrawal() {
         );
 
     return (
-        <div className="container-fluid">
+        <div className="db-page">
             <Toast toasts={toasts} />
-            <h2 className="mb-4">Withdrawal</h2>
 
-            <div className="row mb-4">
-                <div className="col-md-6">
-                    <div className="card border-success shadow">
-                        <div className="card-body text-center">
-                            <h5>Available Income Balance</h5>
-                            <h3 className="text-success">{summary.Withdrawalable} CC-CHIP</h3>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <div className="card border-warning shadow">
-                        <div className="card-body text-center">
-                            <h5>Available Reward Balance</h5>
-                            <h3 className="text-warning">{summary.rewardWithdrawalable} CC-CHIP</h3>
-                        </div>
-                    </div>
-                </div>
+            {/* ── Page Title ── */}
+            <div className="cc-section-title">
+                <h1>Withdrawal</h1>
+                <p>Withdraw your income and rewards</p>
             </div>
 
-            <ul className="nav nav-tabs mb-4">
-                <li className="nav-item">
-                    <button className={`nav-link ${activeTab === "income" ? "active" : ""}`} onClick={() => setActiveTab("income")}>
-                        Income Withdrawal
-                    </button>
-                </li>
-                <li className="nav-item">
-                    <button className={`nav-link ${activeTab === "reward" ? "active" : ""}`} onClick={() => setActiveTab("reward")}>
-                        Reward Withdrawal
-                    </button>
-                </li>
-            </ul>
-
-            {activeTab === "income" && (
-                <div className="card shadow">
-                    <div className="card-header bg-primary text-white">Income Withdrawal</div>
-                    <div className="card-body">
-                        <label>Amount</label>
-                        <input className="form-control mb-3" type="number" value={incomeAmount} onChange={(e) => setIncomeAmount(e.target.value)} />
-                        {loading && <Loader fullScreen={false} text="Processing transaction..." />}
-                        {!loading && (
-                            <button className="btn btn-success w-100" disabled={loading} onClick={WithdrawalIncome}>
-                                Withdrawal Income
-                            </button>
-                        )}
+            {/* ── Balance Cards Row ── */}
+            <div className="cc-grid-4">
+                {/* Income Balance */}
+                <div className="cc-card cc-glow-red" style={{ animation: "db-card-in 0.35s ease both" }}>
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "var(--cc-jackpot)", background: "linear-gradient(135deg, rgba(0,197,126,0.15), rgba(0,232,255,0.08))" }}>
+                            💰
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Available Income Balance</h5>
+                            <div className="cc-withdraw-balance" style={{ color: "var(--cc-jackpot)" }}>{summary.Withdrawalable} CC-CHIP</div>
+                        </div>
                     </div>
+                </div>
+
+                {/* Reward Balance */}
+                <div className="cc-card cc-glow-purple" style={{ animation: "db-card-in 0.35s ease both 0.1s" }}>
+                    <div className="cc-withdraw-balance-row">
+                        <div className="cc-withdraw-icon" style={{ color: "var(--cc-gold-light)", background: "linear-gradient(135deg, rgba(245,166,35,0.15), rgba(255,184,48,0.08))" }}>
+                            🎁
+                        </div>
+                        <div>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Available Team Reward Balance</h5>
+                            <div className="cc-withdraw-balance" style={{ color: "var(--cc-gold-light)" }}>{summary.rewardWithdrawalable} CC-CHIP</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* ── Tabs ── */}
+            <div className="tx-tab-bar">
+                <button
+                    className={`tx-tab-btn ${activeTab === "income" ? "tx-tab-btn-active" : ""}`}
+                    onClick={() => setActiveTab("income")}
+                >
+                    <span className="tx-tab-icon">💸</span>
+                    <span className="tx-tab-label">Income Withdrawal</span>
+                </button>
+                <button
+                    className={`tx-tab-btn ${activeTab === "reward" ? "tx-tab-btn-active" : ""}`}
+                    onClick={() => setActiveTab("reward")}
+                >
+                    <span className="tx-tab-icon">🎁</span>
+                    <span className="tx-tab-label">Reward Withdrawal</span>
+                </button>
+            </div>
+
+            {/* ── Income Withdrawal Form ── */}
+            {activeTab === "income" && (
+                <div className="cc-card cc-withdraw-form-card">
+                    <h3 className="cc-card-title" style={{ margin: 0 }}>Income Withdrawal</h3>
+                    <div className="cc-withdraw-divider" />
+
+                    <div className="cc-withdraw-field-wrap">
+                        <label>Amount</label>
+                        <div className="cc-withdraw-input-row">
+                            <input
+                                className="cc-withdraw-input"
+                                type="number"
+                                placeholder="0.00"
+                                value={incomeAmount}
+                                onChange={(e) => setIncomeAmount(e.target.value)}
+                            />
+                            <button
+                                className="cc-withdraw-max"
+                                onClick={() => setIncomeAmount(summary.Withdrawalable)}
+                            >
+                                MAX
+                            </button>
+                        </div>
+                    </div>
+
+                    {loading && <Loader fullScreen={false} text="Processing transaction..." />}
+                    {!loading && (
+                        <button
+                            className="cc-btn-primary cc-btn-full"
+                            disabled={loading}
+                            onClick={WithdrawalIncome}
+                        >
+                            💸 Withdraw Income
+                        </button>
+                    )}
                 </div>
             )}
 
+            {/* ── Reward Withdrawal Form ── */}
             {activeTab === "reward" && (
-                <div className="card shadow">
-                    <div className="card-header bg-warning text-dark">Reward Withdrawal</div>
-                    <div className="card-body">
+                <div className="cc-card cc-withdraw-form-card">
+                    <h3 className="cc-card-title" style={{ margin: 0 }}>Reward Withdrawal</h3>
+                    <div className="cc-withdraw-divider" />
+
+                    <div className="cc-withdraw-field-wrap">
                         <label>Amount</label>
-                        <input className="form-control mb-3" type="number" value={rewardAmount} onChange={(e) => setRewardAmount(e.target.value)} />
-                        {loading && <Loader fullScreen={false} text="Processing transaction..." />}
-                        {!loading && (
-                            <button className="btn btn-danger w-100" disabled={loading} onClick={WithdrawalReward}>
-                                Withdrawal Reward
+                        <div className="cc-withdraw-input-row">
+                            <input
+                                className="cc-withdraw-input"
+                                type="number"
+                                placeholder="0.00"
+                                value={rewardAmount}
+                                onChange={(e) => setRewardAmount(e.target.value)}
+                            />
+                            <button
+                                className="cc-withdraw-max"
+                                onClick={() => setRewardAmount(summary.rewardWithdrawalable)}
+                            >
+                                MAX
                             </button>
-                        )}
+                        </div>
                     </div>
+
+                    {loading && <Loader fullScreen={false} text="Processing transaction..." />}
+                    {!loading && (
+                        <button
+                            className="cc-btn-primary cc-btn-full"
+                            disabled={loading}
+                            onClick={WithdrawalReward}
+                        >
+                            🎁 Withdraw Reward
+                        </button>
+                    )}
                 </div>
             )}
         </div>
     );
 }
+
