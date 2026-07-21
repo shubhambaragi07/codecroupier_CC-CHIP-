@@ -90,7 +90,7 @@ export default function Withdrawal() {
             {/* ── Page Title ── */}
             <div className="cc-section-title">
                 <h1>Withdrawal</h1>
-                <p>Withdraw your income and rewards</p>
+                <p>Withdraw your rewards</p>
             </div>
 
             {/* ── Balance Cards Row ── */}
@@ -102,7 +102,7 @@ export default function Withdrawal() {
                             💰
                         </div>
                         <div>
-                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Available Income Balance</h5>
+                            <h5 style={{ fontSize: "13px", color: "var(--cc-silver-border)", margin: 0 }}>Available Reward Balance</h5>
                             <div className="cc-withdraw-balance" style={{ color: "var(--cc-jackpot)" }}>{summary.Withdrawalable} CC-CHIP</div>
                         </div>
                     </div>
@@ -130,21 +130,21 @@ export default function Withdrawal() {
                     onClick={() => setActiveTab("income")}
                 >
                     <span className="tx-tab-icon">💸</span>
-                    <span className="tx-tab-label">Income Withdrawal</span>
+                    <span className="tx-tab-label">Reward Withdrawal</span>
                 </button>
                 <button
                     className={`tx-tab-btn ${activeTab === "reward" ? "tx-tab-btn-active" : ""}`}
                     onClick={() => setActiveTab("reward")}
                 >
                     <span className="tx-tab-icon">🎁</span>
-                    <span className="tx-tab-label">Reward Withdrawal</span>
+                    <span className="tx-tab-label">Team Reward Withdrawal</span>
                 </button>
             </div>
 
             {/* ── Income Withdrawal Form ── */}
             {activeTab === "income" && (
                 <div className="cc-card cc-withdraw-form-card">
-                    <h3 className="cc-card-title" style={{ margin: 0 }}>Income Withdrawal</h3>
+                    <h3 className="cc-card-title" style={{ margin: 0 }}>Reward Withdrawal</h3>
                     <div className="cc-withdraw-divider" />
 
                     <div className="cc-withdraw-field-wrap">
@@ -173,16 +173,16 @@ export default function Withdrawal() {
                             disabled={loading}
                             onClick={WithdrawalIncome}
                         >
-                            💸 Withdraw Income
+                            💸 Withdraw Reward
                         </button>
                     )}
                 </div>
             )}
 
-            {/* ── Reward Withdrawal Form ── */}
+            {/* ── Team Reward Withdrawal Form ── */}
             {activeTab === "reward" && (
                 <div className="cc-card cc-withdraw-form-card">
-                    <h3 className="cc-card-title" style={{ margin: 0 }}>Reward Withdrawal</h3>
+                    <h3 className="cc-card-title" style={{ margin: 0 }}>Team Reward Withdrawal</h3>
                     <div className="cc-withdraw-divider" />
 
                     <div className="cc-withdraw-field-wrap">
@@ -211,7 +211,7 @@ export default function Withdrawal() {
                             disabled={loading}
                             onClick={WithdrawalReward}
                         >
-                            🎁 Withdraw Reward
+                            🎁 Withdraw Team Reward
                         </button>
                     )}
                 </div>

@@ -236,7 +236,7 @@ export default function Deposit() {
                         <ul style={{ margin: 0, padding: "0 0 0 18px", color: "var(--cc-silver)", fontSize: "13px", lineHeight: "1.8" }}>
                             <li>Stake a minimum of <strong style={{ color: "var(--cc-silver-light)" }}>100 CC-CHIP</strong> to activate your account</li>
                             <li>Earn up to <strong style={{ color: "var(--cc-jackpot)" }}>1% daily reward</strong> on your staked amount</li>
-                            <li>Build your team and earn <strong style={{ color: "var(--cc-purple)" }}>direct & level income</strong></li>
+                            <li>Build your team and earn <strong style={{ color: "var(--cc-purple)" }}>direct & level reward</strong></li>
                             <li>Withdraw your earnings anytime from the Withdrawal page</li>
                         </ul>
                     </div>

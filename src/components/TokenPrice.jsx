@@ -45,11 +45,10 @@ export default function TokenPrice() {
                             ${price !== null ? price.toFixed(4) : "—"}
                             <span className="db-widget-main-unit">USD</span>
                         </div>
-                        <div className="db-widget-sub">1 CC-CHIP = ${price !== null ? price.toFixed(4) : "—"} USD</div>
+                        <div className="db-widget-sub">1 CC-CHIP = 1.08 USD</div>
                     </>
                 )}
             </div>
-
             {lastUpdated && (
                 <div className="db-widget-footer">
                     Updated {lastUpdated.toLocaleTimeString()}
